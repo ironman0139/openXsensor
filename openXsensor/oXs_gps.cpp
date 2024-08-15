@@ -1,5 +1,12 @@
 #include "oXs_gps.h"
 #include <avr/pgmspace.h>
+#include <math.h>
+
+// Variablen für die Strecke
+float totalDistance = 0;
+float previousLat = 0;
+float previousLon = 0;
+bool firstFix = true;
 
 #ifdef DEBUG
 //#define DEBUGGPS
@@ -74,6 +81,38 @@ uint32_t GPS_last_fix_millis ; // time when last fix has been received (used by 
 int32_t GPS_last_fix_lon ;     // last lon when a fix has been received
 int32_t GPS_last_fix_lat ;     // last lat when a fix has been received
 #endif
+
+void calculateDistance(float lat1, float lon1, float lat2, float lon2) {
+    const float R = 6371.0; // Erdradius in km
+
+    // Umrechnung von Grad in Radiant
+    float dLat = (lat2 - lat1) * (M_PI / 180.0);
+    float dLon = (lon2 - lon1) * (M_PI / 180.0);
+
+    lat1 = lat1 * (M_PI / 180.0);
+    lat2 = lat2 * (M_PI / 180.0);
+
+    // Haversine-Formel
+    float a = sin(dLat / 2) * sin(dLat / 2) + cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
+    float c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    float distance = R * c;
+
+    // Strecke addieren
+    totalDistance += distance;
+}
+
+void processGpsData(float currentLat, float currentLon) {
+    if (firstFix) {
+        previousLat = currentLat;
+        previousLon = currentLon;
+        firstFix = false;
+    } else {
+        calculateDistance(previousLat, previousLon, currentLat, currentLon);
+        previousLat = currentLat;
+        previousLon = currentLon;
+    }
+}
 
 // Receive buffer
 static union {

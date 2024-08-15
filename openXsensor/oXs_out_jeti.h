@@ -67,7 +67,8 @@ struct t_mbAllData {
 #define GPS_ALTITUDE     15       
 #define RPM             16        
 #define GPS_DISTANCE       17     
-#define GPS_BEARING        18     
+#define GPS_BEARING        18 
+#define totalDistance      50    
 //#define SENSITIVITY_2      19     
 //#define ALT_OVER_10_SEC_2  20      
 #define AIR_SPEED          21      

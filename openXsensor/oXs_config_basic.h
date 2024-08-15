@@ -20,7 +20,7 @@
 #define OXS_CONFIG_BASIC_h
 
 // --------- 1 - Telemetry protocol ---------  
-#define PROTOCOL  FRSKY_SPORT   // select between FRSKY_SPORT , FRSKY_HUB , FRSKY_SPORT_HUB , MULTIPLEX , HOTT, JETI
+#define PROTOCOL  JETI   // select between FRSKY_SPORT , FRSKY_HUB , FRSKY_SPORT_HUB , MULTIPLEX , HOTT, JETI
 
 // ***** 1.1 - Pin connected to Rx ************                              See oXs_config_advanced.h (normally no need to change it) (default is arduino pin 4 connected to RX) 
 // ***** 1.2 - SPORT_SENSOR_ID (used only for Frsky Sport protocol)  *****   See oXs_config_advanced.h (normally no need to change it) 
@@ -112,7 +112,7 @@
 
 // --------- 10 - IMU 6050 --- (accelerometer + gyro)  and HMC5883 (magnetometer) --  see oXs_config_advanced.h for additionnal parameters e.g. about calibration
 // ***** 10.1 - IMU 6050 *****
-#define A_MPU6050_IS_CONNECTED      YES              // select between YES , NO
+#define A_MPU6050_IS_CONNECTED      NO              // select between YES , NO
 
 // ***** 10.2 - HMC5883 *****
 #define CALCULATE_YAW_WITH_HMC5883   NO             // select between YES , NO ; YES requires that A_MPU6050_IS_CONNECTED is YES here above
